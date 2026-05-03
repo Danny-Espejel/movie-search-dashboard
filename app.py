@@ -13,7 +13,8 @@ st.set_page_config(
 @st.cache_resource
 def init_firebase():
     if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase_key.json")
+        firebase_config = dict(st.secrets["firebase"])
+        cred = credentials.Certificate(firebase_config)
         firebase_admin.initialize_app(cred)
 
     return firestore.client()
