@@ -14,6 +14,10 @@ st.set_page_config(
 def init_firebase():
     if not firebase_admin._apps:
         firebase_config = dict(st.secrets["firebase"])
+
+        if "private_key" in firebase_config:
+            firebase_config["private_key"] = firebase_config["private_key"].replace("\\n", "\n")
+
         cred = credentials.Certificate(firebase_config)
         firebase_admin.initialize_app(cred)
 
